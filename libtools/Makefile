@@ -4,8 +4,8 @@
 
 ARCH ?=
 CROSS_COMPILE ?=
-CC := $(CROSS_COMPILE)gcc
-AR := $(CROSS_COMPILE)ar
+CC ?=
+AR ?=
 
 CFLAGS := -O2 -Wall -Wextra -std=c99 -Iinc -I.
 

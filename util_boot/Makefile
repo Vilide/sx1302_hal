@@ -42,7 +42,7 @@ LIB_PATH := ../libloragw
 
 ### Expand build options
 CFLAGS := -std=c99 $(WARN_CFLAGS) $(OPT_CFLAGS) $(DEBUG_CFLAGS)
-CC := $(CROSS_COMPILE)gcc
+CC ?= 
 AR := $(CROSS_COMPILE)ar
 
 ### General build targets
@@ -57,8 +57,8 @@ ifneq ($(strip $(TARGET_IP)),)
  ifneq ($(strip $(TARGET_DIR)),)
   ifneq ($(strip $(TARGET_USR)),)
 	@echo "---- Copying boot files to $(TARGET_IP):$(TARGET_DIR)"
-	@ssh $(TARGET_USR)@$(TARGET_IP) "mkdir -p $(TARGET_DIR)"
-	@scp boot $(TARGET_USR)@$(TARGET_IP):$(TARGET_DIR)
+	@ssh -i $(SSH_KEY) $(TARGET_USR)@$(TARGET_IP) "mkdir -p $(TARGET_DIR)"
+	@scp -i $(SSH_KEY) boot $(TARGET_USR)@$(TARGET_IP):$(TARGET_DIR)
   else
 	@echo "ERROR: TARGET_USR is not configured in target.cfg"
   endif

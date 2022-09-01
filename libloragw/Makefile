@@ -8,7 +8,7 @@ include ../target.cfg
 
 ARCH ?=
 CROSS_COMPILE ?=
-CC := $(CROSS_COMPILE)gcc
+CC ?=
 AR := $(CROSS_COMPILE)ar
 
 CFLAGS := -O2 -Wall -Wextra -std=c99 -Iinc -I. -I../libtools/inc
@@ -18,7 +18,7 @@ INCLUDES = $(wildcard inc/*.h) $(wildcard ../libtools/inc/*.h)
 
 ### linking options
 
-LIBS := -lloragw -ltinymt32 -lrt -lm
+LIBS := -lloragw -ltinymt32 -lrt -lm -lcursor
 
 ### general build targets
 
@@ -48,9 +48,9 @@ ifneq ($(strip $(TARGET_IP)),)
  ifneq ($(strip $(TARGET_DIR)),)
   ifneq ($(strip $(TARGET_USR)),)
 	@echo "---- Copying libloragw files to $(TARGET_IP):$(TARGET_DIR)"
-	@ssh $(TARGET_USR)@$(TARGET_IP) "mkdir -p $(TARGET_DIR)"
-	@scp test_loragw_* $(TARGET_USR)@$(TARGET_IP):$(TARGET_DIR)
-	@scp ../tools/reset_lgw.sh $(TARGET_USR)@$(TARGET_IP):$(TARGET_DIR)
+	@ssh -i $(SSH_KEY) $(TARGET_USR)@$(TARGET_IP) "mkdir -p $(TARGET_DIR)"
+	@scp -i $(SSH_KEY) test_loragw_* $(TARGET_USR)@$(TARGET_IP):$(TARGET_DIR)
+	@scp -i $(SSH_KEY) ../tools/reset_lgw.sh $(TARGET_USR)@$(TARGET_IP):$(TARGET_DIR)
   else
 	@echo "ERROR: TARGET_USR is not configured in target.cfg"
   endif

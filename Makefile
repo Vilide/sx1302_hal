@@ -1,7 +1,8 @@
 ### Environment constants
 
-ARCH ?=
-CROSS_COMPILE ?=
+export PATH ?= 
+export ARCH ?=
+export CROSS_COMPILE ?=
 export
 
 ### general build targets
