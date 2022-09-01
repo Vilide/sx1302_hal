@@ -13,21 +13,21 @@ OBJDIR = obj
 
 ifeq '$(BUILD_MODE)' 'alpha'
   $(warning /\/\/\/ Building in 'alpha' mode \/\/\/\)
-  WARN_CFLAGS   :=
-  OPT_CFLAGS    := -O0
-  DEBUG_CFLAGS  := -g
+  WARN_CCOMPFLAGS   :=
+  OPT_CCOMPFLAGS    := -O0
+  DEBUG_CCOMPFLAGS  := -g
   LDFLAGS       :=
 else ifeq '$(BUILD_MODE)' 'debug'
   $(warning /\/\/\/  Building in 'debug' mode \/\/\/\)
-  WARN_CFLAGS   := -Wall -Wextra
-  OPT_CFLAGS    := -O2
-  DEBUG_CFLAGS  := -g
+  WARN_CCOMPFLAGS   := -Wall -Wextra
+  OPT_CCOMPFLAGS    := -O2
+  DEBUG_CCOMPFLAGS  := -g
   LDFLAGS       :=
 else ifeq  '$(BUILD_MODE)' 'release'
   $(warning /\/\/\/  Building in 'release' mode \/\/\/\)
-  WARN_CFLAGS   := -Wall -Wextra
-  OPT_CFLAGS    := -O2 -ffunction-sections -fdata-sections
-  DEBUG_CFLAGS  :=
+  WARN_CCOMPFLAGS   := -Wall -Wextra
+  OPT_CCOMPFLAGS    := -O2 -ffunction-sections -fdata-sections
+  DEBUG_CCOMPFLAGS  :=
   LDFLAGS       := -Wl,--gc-sections
 else
   $(error BUILD_MODE must be set to either 'alpha', 'debug' or 'release')
@@ -41,7 +41,7 @@ APP_LIBS := -lloragw -lm -ltinymt32 -lrt
 LIB_PATH := ../libloragw
 
 ### Expand build options
-CFLAGS := -std=c99 $(WARN_CFLAGS) $(OPT_CFLAGS) $(DEBUG_CFLAGS)
+CCOMPFLAGS := -std=c99 $(WARN_CCOMPFLAGS) $(OPT_CCOMPFLAGS) $(DEBUG_CCOMPFLAGS)
 CC ?= 
 AR := $(CROSS_COMPILE)ar
 
@@ -74,7 +74,7 @@ $(OBJDIR):
 
 ### Compile main program
 $(OBJDIR)/$(APP_NAME).o: src/$(APP_NAME).c | $(OBJDIR)
-	$(CC) -c $< -o $@ $(CFLAGS) -Iinc -I../libloragw/inc
+	$(CC) -c $< -o $@ $(CCOMPFLAGS) -Iinc -I../libloragw/inc
 
 ### Link everything together
 $(APP_NAME): $(OBJDIR)/$(APP_NAME).o $(LIB_PATH)/libloragw.a

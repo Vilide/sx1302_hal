@@ -7,10 +7,11 @@ CROSS_COMPILE ?=
 CC ?=
 AR ?=
 
-CFLAGS := -O2 -Wall -Wextra -std=c99 -Iinc -I.
+CCOMPFLAGS := -O2 -Wall -Wextra -std=c99 -Iinc -I.
 
 OBJDIR = obj
 INCLUDES = $(wildcard inc/*.h)
+$(info $$INCLUDES is [${INCLUDES}])
 
 ### linking options
 
@@ -30,7 +31,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 $(OBJDIR)/%.o: src/%.c $(INCLUDES) | $(OBJDIR)
-	$(CC) -c $(CFLAGS) $< -o $@
+	$(CC) -c $(CCOMPFLAGS) $< -o $@
 
 ### static library
 

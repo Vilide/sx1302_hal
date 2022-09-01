@@ -12,6 +12,7 @@ export
 all: libtools libloragw packet_forwarder util_net_downlink util_chip_id util_boot util_spectral_scan
 
 libtools:
+	$(info $$(MAKE)$var is [$(MAKE)])
 	$(MAKE) all -e -C $@
 
 libloragw: libtools
